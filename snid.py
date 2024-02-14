@@ -834,6 +834,7 @@ def submit_class(unclassifys, unclassified_reds, f):
                 # Updates RCF source ASCII if user classified any transients
                 f['Classification'][np.argwhere(f['Source Name'] == transients[tr])] = types[tr]
                 f['Classification Date'][np.argwhere(f['Source Name'] == transients[tr])] = str(datetime.datetime.utcnow().date())
+                f['user'][np.argwhere(f['Source Name'] == transients[tr])] = 'S. Covarrubias' #fix to be based on user
 
             f.write('RCF_sources.ascii', format='ascii', overwrite=True, delimiter='\t')
 

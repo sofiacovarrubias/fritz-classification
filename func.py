@@ -1549,10 +1549,8 @@ def get_TNS_instrument_ID(inst):
         Input : instrument
         Returns : TNS instrument ID
     '''
-    try:
-        inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10}
-    except KeyError:
-        print(f"{inst} not in list of instruments, please confirm it exists in TNS.")
+
+    inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10}
 
     return inst_ids[inst]
 

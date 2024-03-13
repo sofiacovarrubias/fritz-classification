@@ -274,6 +274,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
             spectrum_info = write_ascii_file(ztfname, auto = True) #returns "spectrum_name"
             spectrum_name = spectrum_info[0]
+            #print(spectrum_name)
 
             if spectrum_name != 'No Spectra Found' and spectrum_name != 'Resuming...':
 
@@ -847,6 +848,70 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                         classificationReport.spec_proprietary_period_value = proprietary_period
                         classificationReport.spec_proprietary_period_units = proprietary_units
 
+                    elif inst == 'Deveny+LMI':
+
+                        auths = np.array(['E. Hammerstein', 'S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+
+                        if name != 'S. ZTF':
+                            flag_1 = 0
+                            for au, auth in enumerate(auths):
+                                if name in auth:
+                                    auths = np.append(name, np.delete(auths, au))
+                                    flag_1 = 1
+                                    break
+
+                            if flag_1 == 0:
+                                auths = np.append(name, auths)
+
+                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        source_group = 48 ### Require source group id from drop down list, 0 is for None
+                        spectypes = np.array(['object','host','sky','arcs','synthetic'])
+
+                        #header = (a['data']['altdata'])
+
+                        #proprietary_period = int(input("Proprietary period in years:", x)
+                        proprietary_period = '0'
+                        proprietary_units = "years"
+                        spec_comments =''
+                        classification_comments = ''
+                        spectype='object'
+                        spectype_id = ['object', 'host', 'sky', 'arcs', 'synthetic'].index(spectype) + 1
+
+                        OBSDATE = a['data']['observed_at'].replace('T', ' ')
+
+                        classificationReport = TNSClassificationReport()
+                        classificationReport.name = get_IAUname(ztfname)[3:]
+                        classificationReport.fitsName = ''
+                        classificationReport.asciiName = spectrum_name
+                        classificationReport.classifierName = classifiers
+                        classificationReport.classificationID = get_TNS_classification_ID(classify)
+                        classificationReport.redshift = get_redshift(ztfname)
+                        classificationReport.classificationComments = classification_comments
+                        classificationReport.obsDate = OBSDATE
+                        classificationReport.instrumentID = get_TNS_instrument_ID(inst)
+                        #classificationReport.expTime = '300'
+
+                        observers = []
+
+                        for o in a['data']['observers']:
+                            observers.append(str(o['first_name'])+' '+str(o['last_name']))
+
+                        classificationReport.observers = ', '.join(map(str, observers))
+
+                        reducers = []
+
+                        for r in a['data']['reducers']:
+                            reducers.append(str(r['first_name'])+' '+str(r['last_name']))
+
+                        classificationReport.reducers = ', '.join(map(str, reducers))
+
+                        classificationReport.specTypeID = spectype_id
+                        classificationReport.spectrumComments = spec_comments
+                        classificationReport.groupID = source_group
+                        classificationReport.spec_proprietary_period_value = proprietary_period
+                        classificationReport.spec_proprietary_period_units = proprietary_units
+
+
                     else:
 
                         print(inst + ' not in list of instruments, please add to code.')
@@ -1166,7 +1231,7 @@ def get_IAUname(ztfname):
 
         except requests.exceptions.ConnectionError:
             print('connection error')
-            print(response.text)
+            #print(response.text)
             continue
 
         try:
@@ -1928,7 +1993,7 @@ def write_ascii_file(ztfname, path=os.getcwd(), auto=False):
         spectrum_name = s
 
 
-    elif inst == 'LRIS' or inst == 'NIRES' or inst == 'GMOS_GS' or inst == 'FLOYDS':
+    elif inst == 'LRIS' or inst == 'NIRES' or inst == 'GMOS_GS' or inst == 'FLOYDS' or inst == 'Deveny+LMI':
 
         wav = (a['data']['wavelengths'])
         flux = (a['data']['fluxes'])

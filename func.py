@@ -911,7 +911,6 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                         classificationReport.spec_proprietary_period_value = proprietary_period
                         classificationReport.spec_proprietary_period_units = proprietary_units
 
-
                     else:
 
                         print(inst + ' not in list of instruments, please add to code.')
@@ -1550,7 +1549,7 @@ def get_TNS_instrument_ID(inst):
         Returns : TNS instrument ID
     '''
 
-    inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10}
+    inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10, 'Deveny+LMI':143}
 
     return inst_ids[inst]
 

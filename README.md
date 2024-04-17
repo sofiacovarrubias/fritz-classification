@@ -53,17 +53,7 @@ Download new list of RCF sources? ([y]/n)
 
 Each source is saved with its TNS name, save date, classification (if available), classification date (if available), and redshift (if available). By default, the last 180 days of saved sources will be saved. This is necessary because some sources are saved much earlier and potentially classified recently. This process can take a while, so be patient. This data will be saved as `RCF_sources.ASCII`. If the code fails for whatever reason, you can run from the beginning but skip downloading the ASCII file by entering `n` to the prompt.
 
-### 1. Redshift Determination for Classified Sources
-
-The script can search for sources saved since the inputted date that are classified but do not have redshifts in Fritz. If any exist, the user can proceed to run SNID on these sources to determine redshift. If the source has a spectrum on Fritz, the user will be prompted to enter in a spectrum to use in SNID. The Fritz page will open in your browser. Some helpful things to check are:
-
-* **The spectra themselves**: check the dates of the uploaded spectra, typically a classification will occur a day or so after the spectrum was uploaded. If there are duplicate uploaded spectra, it does not matter. Generally, the "constep" spectra have lower SNR and were used for classification. If there is none in this time frame, check below.
-* **Classifications**: Since these sources have classifications, check the date they were classified, and choose the spectrum that led to classification.
-* **Comments**: Check comments for information on the source, often there will be information about what led to classification. Check these to ensure the correct spectrum is selected, sometimes they will explicitly mention when they classified. The SEDMbot will also upload reports from observing runs. If the classification came from TNS, this will likely be conveyed in the comments, and if so, none of the spectra led to classification. If this is the case, select the spectrum based on the SNID criteria in the next set of bullet points.
-
-Once the correct spectrum is uploaded, SNID will run on the uploaded spectrum, at which point it will either converge on certain SN types or not. If it does not converge, the code will move on to the next source. If it does, it will output the ten templates with the highest `rlap` score. Of these, check the top few and identify if they match with the Fritz classification, and if they do, enter `y` when prompted by the code to save. After running through all sources that are classified without redshifts, the code will ask whether you want to upload the ones you saved to Fritz. If you upload, the code will output the API response to verify whether or not they have successfully been uploaded to Fritz.
-
-### 2. SNID Analysis on Unclassified Sources
+### 1. SNID Analysis on Unclassified Sources
 
 The script can select all unclassified sources that have been saved since the inputted date to run classification. The user can proceed to run SNID on unclassified transients, the process of which is the same as with the redshifts. Select the spectrum to use carefully using the following critera:
 
@@ -78,7 +68,7 @@ The results of SNID will be saved in `/outfiles/<ZTFname>` (this directory also 
 
 Again, at the end of the source list the user will be prompted to upload the classifications to Fritz. It will also upload redshifts for the transients if they are not already on Fritz, but will not overwrite if it does already have them. The API responses for each upload will again be returned. In the case that a SNID classification is not an option in Fritz, it will return a failure code, but in this situation just ignore the source and move on. The successfully uploaded classifications and redshifts will be updated in the source ASCII file, so it does not need to be downloaded again to include the updated classifications.
 
-### 3. Light Curve Submission
+### 2. Light Curve Submission
 
 Users can choose to fit light curves to transients' photometry for unclassified transients saved since the user's inputted date or Type Ia saved/classified since said date. This will pull photometry for each of the transients from Fritz. For those with less than five unique nights of photometry, a plot of the fitted light curve will appear and the user can observe it and determine whether it is meaningful enough to be uploaded to Fritz.
 
@@ -86,11 +76,11 @@ The rest will automatically be uploaded or, if there is already a light curve co
 
 See also [here](http://gayatri.caltech.edu:88/) for individual LC fitting.
 
-### 4. Host Association
+### 3. Host Association
 
 You can also use ztfiaenv (developed by Mat Smith) to associate transients with potential hosts. This option will run through the objects and use the fitting code to find the most likely fit. In the occasion where this does not work, an error message will appear and will skip the object. This algorithm has relatively high accuracy, but has been known to fail with low-redshift (closer) and/or larger hosts. If this is the case, you can correct it with [individual fitting](http://gayatri.caltech.edu:88/).
 
-### 5. TNS Submission
+### 4. TNS Submission
 
 The script can also submit to TNS any classified transients that have not been previously submitted by ZTF.
 
@@ -103,14 +93,6 @@ It will then prompt the user to enter in a spectrum. It should be relatively obv
 Once you select the correct spectrum, the code will generate a TNS report, which will be submitted to TNS through the API. The script might indicate that the source has already been classified and submitted to TNS by a different group. You can check whether the classification is the same, but regardless we want to send our own reports with our own classification analyses to TNS. The code will print out the report as a dictionary, check to make sure that things look correct. If the Fritz classification has no corresponding classification on TNS or there is no redshift available in Fritz, it will return an error in the API response. Do not worry, and move on to the next source. If the submission was successful, it will print a 200 success message in green. The "Uploaded to TNS" comment will then be posted on the source's Fritz page, and the code will move on to the next source.
 
 After completing all in the list, the script will indicate that the submission process is complete.
-
-## Plans
-
-- [x] Include additional classification techniques using photometry.
-- [x] Additional accuracy with Zooniverse
-- [ ] ~~Include RCF checking through the API and with photometry curves. (This is being looked into but may be challenging as it takes significantly longer to do it through API.)~~ This is not really practical as it is too time-inefficient and requires too much user input anyway.
-- [ ] ~~Assigning SEDM follow-ups for noisy data or as addition with RCF checking.~~
-- [ ] Incorporating the Fritz API TNS reporting capabilities.
 
 ## Changelog
 

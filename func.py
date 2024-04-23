@@ -1213,7 +1213,7 @@ def get_IAUname(ztfname):
         Returns : ATname
     '''
 
-    url = 'https://fritz.science/api/alerts_aux/'+ztfname
+    url = 'https://fritz.science/api/sources/'+ztfname
     headers = {'Authorization': f'token {GETTOKEN}'}
 
     while True:
@@ -1250,8 +1250,8 @@ def get_IAUname(ztfname):
             print('key error')
             print(response.text)
 
-    if response.status_code != 404 and 'cross_matches' in json.loads(response.text)['data'].keys() and len(json.loads(response.text)['data']['cross_matches']['TNS']) != 0:
-        return json.loads(response.text)['data']['cross_matches']['TNS'][0]['name']
+    if response.status_code != 404 and json.loads(response.text)['data']['tns_name'] != None: 
+        return json.loads(response.text)['data']['tns_name']
 
     req_data = {
         "ra": "",
@@ -1267,7 +1267,6 @@ def get_IAUname(ztfname):
 
     data = {'api_key' : API_KEY, 'data' : json.dumps(req_data)}
     headers={'User-Agent':'tns_marker{"tns_id":'+str(YOUR_BOT_ID)+', "type":"bot", "name":"'+YOUR_BOT_NAME+'"}'}
-    #pprint(headers)
 
     while True:
         try:

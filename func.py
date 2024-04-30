@@ -298,7 +298,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     if inst == 'SEDM':
 
-                        auths = np.array(['S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -354,7 +354,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'SPRAT':
 
-                        auths = np.array(['D. Perley (LJMU)', 'S. Covarrubias', 'W. Meynardie', 'M. Chu', 'K. R. Hinds', 'C. Fremling']) ### Change accordingly
+                        auths = np.array(['D. Perley (LJMU)', 'S. Covarrubias', 'M. Chu', 'K. R. Hinds', 'C. Fremling']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -405,7 +405,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'ALFOSC':
 
-                        auths = np.array(['S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -469,7 +469,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'DBSP' or inst == 'KAST':
 
-                        auths = np.array(['S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -530,7 +530,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'LRIS':
 
-                        auths = np.array(['S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -593,7 +593,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'NIRES':
 
-                        auths = np.array(['S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -656,7 +656,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'GMOS_GS':
 
-                        auths = np.array(['S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -719,7 +719,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'FLOYDS':
 
-                        auths = np.array(['S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
                         
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -783,7 +783,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'DIS':
 
-                        auths = np.array(['M. Graham (UW)', 'S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['M. Graham (UW)', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -850,7 +850,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'Deveny+LMI':
 
-                        auths = np.array(['E. Hammerstein', 'S. Covarrubias', 'W. Meynardie', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['E. Hammerstein', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0

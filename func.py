@@ -1939,7 +1939,16 @@ def write_ascii_file(ztfname, path=os.getcwd(), auto=False):
 
         OBSDATE = a['data']['observed_at'].split('T')[0]
 
-
+        # get rid of NaNs
+        idx_nans = np.where(~np.isfinite(np.array(flux, dtype=float)))[0]
+        idx_nans = np.flip(idx_nans) #have to move from end to beginning to avoid messing up index
+        for i in idx_nans:
+            del flux[i]
+            del wav[i]
+            try:
+                del err[i]
+            except:
+                continue
 
         s = (ztfname+'_'+str(OBSDATE)+'_'+str(inst)+'.ascii')
 

@@ -208,8 +208,11 @@ def pull_class(startd):
 
                 continue
 
-            pre_class = get_classification(new)[0]
-
+            url ='https://fritz.science/api/sources/'+new+'/classifications'
+            response = api('GET', url)
+            output = response['data']
+            pre_class = get_classification(output)[0]
+                 
             if pre_class == upload:
                 print(new + ' already classified with the same classification on Fritz.')
                 #subject_set.remove(news_ids[n])

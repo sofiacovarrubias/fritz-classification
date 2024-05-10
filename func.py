@@ -1102,30 +1102,27 @@ def get_user(user_id):
 
     return user_first[0] + '. ' + user_last
 
-def get_classification(ztfname, man=False):
 
-    ''' Info : Query the classification and classification date for any source
-        Input : ZTFname
-        Returns : Classification, Propability, Classification date, User
+def get_classification(output, man=False):
+
+    ''' Info : Choose a classification based on pre-queried classification list
+        Input : Fritz classification query response 
+        Returns : Classification, Probability, Classification date, User
         Comment : You need to choose the classification if there are multiple classifications
     '''
 
-    url = BASEURL+'api/sources/'+ztfname+'/classifications'
-    response = api('GET',url)
-    output = response['data']
-
-    if (len(output)< 1):
+    if len(output)< 1:
         classification = "No Classification found"
         probability = "None"
         classification_date = "None"
         user = 'None'
 
-    elif (len(output)==1):
+    elif len(output)==1:
 
-        classification = response['data'][0]['classification']
-        probability = response['data'][0]['probability']
-        classification_date = response['data'][0]['created_at'].split('T')[0]
-        user = get_user(response['data'][0]['author_id'])
+        classification = output[0]['classification']
+        probability = output[0]['probability']
+        classification_date = output[0]['created_at'].split('T')[0]
+        user = get_user(output[0]['author_id'])
 
         if man == True:
 
@@ -1159,10 +1156,10 @@ def get_classification(ztfname, man=False):
 
         for i in range (len(output)):
 
-            classify = response['data'][i]['classification']
-            classify_date = response['data'][i]['created_at']
-            prob = response['data'][i]['probability']
-            us = get_user(response['data'][i]['author_id'])
+            classify = output[i]['classification']
+            classify_date = output[i]['created_at']
+            prob = output[i]['probability']
+            us = get_user(output[i]['author_id'])
 
             classification.append(classify)
             probability=np.append(probability, prob)
@@ -1189,20 +1186,20 @@ def get_classification(ztfname, man=False):
                     classification = classification[int(user_input)-1]
                     probability = probability[int(user_input)-1]
                     classification_date = classification_date[int(user_input)-1].split('T')[0]
-                    user = get_user(response['data'][int(user_input)-1]['author_id'])
+                    user = get_user(output[int(user_input)-1]['author_id'])
             else:
 
                 classification = classification[int(user_input)-1]
                 probability = probability[int(user_input)-1]
                 classification_date = classification_date[int(user_input)-1].split('T')[0]
-                user = get_user(response['data'][int(user_input)-1]['author_id'])
+                user = get_user(output[int(user_input)-1]['author_id'])
 
         else:
 
             classification = classification[np.argmax(classification_mjd)]
             probability = probability[np.argmax(classification_mjd)]
             classification_date = classification_date[np.argmax(classification_mjd)].split('T')[0]
-            user = get_user(response['data'][np.argmax(classification_mjd)]['author_id'])
+            user = get_user(output[np.argmax(classification_mjd)]['author_id'])
 
     return classification, probability, classification_date, user
 
@@ -1670,7 +1667,7 @@ def sourceclassification(outfile, dat=None):
 
     for page in tqdm(range(num_pages), desc='Total Progress', position=0):
 
-        path = 'https://fritz.science/api/sources?group_ids=' + groupnum + '&saveSummary=true&numPerPage=50&pageNumber='+str(page+1)+'&savedAfter='+str(dat)+'T00:00:00.000001'
+        path = 'https://fritz.science/api/sources?group_ids=' + groupnum + '&numPerPage=50&pageNumber='+str(page+1)+'&savedAfter='+str(dat)+'T00:00:00.000001'
 
         #print(path)
 
@@ -1681,11 +1678,26 @@ def sourceclassification(outfile, dat=None):
 
         for i in tqdm(range(len(response['data']['sources'])), desc='Page ' + str(page+1) + ' of ' + str(num_pages), position=1, leave=False):
 
-            source_name = response['data']['sources'][i]['obj_id']
-            saved_date = response['data']['sources'][i]['saved_at']
-            classification, prob, date, user = get_classification(source_name)
-            IAU = get_IAUname(source_name)
-            red = str(get_redshift(source_name))
+            source_name = response['data']['sources'][i]['id']
+            group = [g for g in response['data']['sources'][i]['groups'] if g['id'] == int(groupnum)]		
+            if len(group) == 0:
+                print(f"{source_name} does not seem to be saved to group {groupnum}")
+                continue
+            saved_date = group[0]['saved_at']
+
+            classifications = response['data']['sources'][i]['classifications']
+            classification, prob, date, user = get_classification(classifications)
+
+            if response['data']['sources'][i]['tns_name'] != None:
+                IAU = response['data']['sources'][i]['tns_name']
+            else:       
+                IAU = get_IAUname(source_name)
+
+            if response['data']['sources'][i]['redshift'] != None:
+                red = str(response['data']['sources'][i]['redshift'])
+            else:       
+                red = "No redshift found"    
+            #red = str(get_redshift(source_name))
 
             #print(saved_date)
 

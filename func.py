@@ -1672,9 +1672,11 @@ def sourceclassification(outfile, dat=None):
         #print(path)
 
         response = api('GET',path)
-
-        if len(response['data']['sources']) == 0:
-            break
+        try:
+            if len(response['data']['sources']) == 0:
+                continue
+        except KeyError:
+            continue #not sure why this error happens, but can treat it as the end of pages
 
         for i in tqdm(range(len(response['data']['sources'])), desc='Page ' + str(page+1) + ' of ' + str(num_pages), position=1, leave=False):
 

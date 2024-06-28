@@ -185,6 +185,8 @@ def post_lc(source, redshift):
     data = get_photometry(source)
     comment_infos = get_source_api(source)['comments']
 
+    LC_link =  '[http://gayatri.caltech.edu:88/query/lc/'+source+'](http://gayatri.caltech.edu:88/query/lc/'+source+')'
+
     for i in range (len(get_source_api(source)['comments'])):
 
         comment_info = comment_infos[i]
@@ -223,7 +225,7 @@ def post_lc(source, redshift):
 
                 # If comment exists but new photometry uploaded, edit comment
                 resp = edit_comment(source, comment_info['id'], comment_info['author_id'], 'sncosmo light curve fit n='+str(len(data))+', M_peak = '+str(np.round(get_peak_absmag(result.parameters[0], result.parameters[2]),1))+
-                    ', x1_nstds = '+str(x1_nstds)+', c_nstds = '+str(c_nstds)+'. LC page: http://gayatri.caltech.edu:88/query/lc/'+source, 'temp.png', source+'_sncosmo_lc.png')
+                    ', x1_nstds = '+str(x1_nstds)+', c_nstds = '+str(c_nstds)+'. LC page: '+LC_link, 'temp.png', source+'_sncosmo_lc.png')
 
                 if resp['status'] == 'success':
                     print(bcolors.OKGREEN + source + ' LC update successful.' + bcolors.ENDC)
@@ -254,7 +256,7 @@ def post_lc(source, redshift):
     plt.savefig('temp.png')
 
     resp = post_comment(source, 'sncosmo light curve fit n='+str(len(data))+', M_peak = '+str(np.round(get_peak_absmag(result.parameters[0], result.parameters[2]),1))+
-        ', x1_nstds = '+str(x1_nstds)+', c_nstds = '+str(c_nstds)+'. LC page: http://gayatri.caltech.edu:88/query/lc/'+source, 'temp.png', source+'_sncosmo_lc.png')
+        ', x1_nstds = '+str(x1_nstds)+', c_nstds = '+str(c_nstds)+'. LC page: '+LC_link, 'temp.png', source+'_sncosmo_lc.png')
 
     if resp['status'] == 'success':
         print(bcolors.OKGREEN + source + ' LC upload successful.' + bcolors.ENDC)

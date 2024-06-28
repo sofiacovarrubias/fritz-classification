@@ -1247,8 +1247,13 @@ def get_IAUname(ztfname):
             print('key error')
             print(response.text)
 
-    if response.status_code != 404 and json.loads(response.text)['data']['tns_name'] != None: 
-        return json.loads(response.text)['data']['tns_name']
+    if response.status_code != 404 and json.loads(response.text)['data']['tns_name'] != None:
+        TNS_sourcename = json.loads(response.text)['data']['tns_name']
+        if 'SN' not in TNS_sourcename or 'AT' not in TNS_sourcename:
+            #Old sources are missing TNS prefix on fritz; update it here
+            url = BASEURL+'api/sources/'+ztfname+'/tns?radius=1&tnsrobotID=1012'
+            response = api('GET', url)
+        return TNS_sourcename
 
     req_data = {
         "ra": "",
@@ -1559,16 +1564,22 @@ def get_total_number_of_sources(group_id):
     response = api('GET',url)
     return len(response['data']['sources'])
 
-def post_comment(ztfname, text, attach=None, attach_name=None):
+def post_comment(ztfname, text, attach=None, attach_name=None, RCF_only=False):
 
     ''' Info : Posts a comment on transient's Fritz page
         Input : ZTFname, text
         Returns : API response
     '''
 
-    data = {
-            "text": text,
-           }
+    if RCF_only == False:
+        data = {
+                "text": text, 
+               }
+    elif RCF_only == True:
+        data = {
+                "text": text,
+                "group_ids": [41, 280, 1621],  # RCF, RCFDeepSurvey, RCFDeepPartnership 
+               }
 
     if attach != None:
         with open(attach, "rb") as img_file:
@@ -1692,13 +1703,17 @@ def sourceclassification(outfile, dat=None):
 
             if response['data']['sources'][i]['tns_name'] != None:
                 IAU = response['data']['sources'][i]['tns_name']
+                if 'SN' not in IAU or 'AT' not in IAU:
+                    #Old sources are missing TNS prefix on fritz; update it here
+                    get_TNSname_url = BASEURL+'api/sources/'+source_name+'/tns?radius=1&tnsrobotID=1012'
+                    TNSname_response = api('GET', get_TNSname_url)
             else:       
                 IAU = get_IAUname(source_name)
 
             if response['data']['sources'][i]['redshift'] != None:
                 red = str(response['data']['sources'][i]['redshift'])
             else:       
-                red = "No redshift found"    
+                red = "No redshift found" #Does not upload to TNS without redshift
             #red = str(get_redshift(source_name))
 
             #print(saved_date)

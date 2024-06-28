@@ -60,8 +60,8 @@ def comment_sublink(source):
         if 'Submit classification to TNS:' in comment:
             print(source + ' already has TNS link.')
             return
-
-    resp = post_comment(source, 'Submit classification to TNS: http://gayatri.caltech.edu:88/query/tns/'+source)
+    tns_submission_link = 'http://gayatri.caltech.edu:88/query/tns/'+source
+    resp = post_comment(source, 'Submit classification to TNS: [' + tns_submission_link + '](' + tns_submission_link + ')', RCF_only=True)
 
     if resp['status'] == 'success':
         print(bcolors.OKGREEN + source + ' TNS link upload successful.' + bcolors.ENDC)
@@ -326,12 +326,14 @@ def post_host(source):
     if hostname == None:
         return
 
+    host_link =  '[http://gayatri.caltech.edu:88/query/host/'+source+'](http://gayatri.caltech.edu:88/query/host/'+source+')'
+
     if redshift != None:
-        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+', z = '+str(redshift)+
-            ', type = '+hosttype+'. host page: http://gayatri.caltech.edu:88/query/host/'+source, 'test_host.png', source+'_host.png')
+        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+', z = '+str(redshift)+', type = '+hosttype+'. host page: '+host_link,
+             'test_host.png', source+'_host.png')
     else:
-        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+
-            ', type = '+hosttype+'. host page: http://gayatri.caltech.edu:88/query/host/'+source, 'test_host.png', source+'_host.png')
+        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+', type = '+hosttype+'. host page: '+host_link, 
+            'test_host.png', source+'_host.png')
 
     if resp['status'] == 'success':
         print(bcolors.OKGREEN + source + ' host association upload successful.' + bcolors.ENDC)

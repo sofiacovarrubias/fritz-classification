@@ -96,6 +96,34 @@ After completing all in the list, the script will indicate that the submission p
 
 ## Changelog
 
+### 2024-06-28
+
+-Made comment links clickable
+-Upload to TNS links are now private to RCF groups
+-Minor fixes
+
+### 2024-05-10
+
+-Signifcant speed improvement when downloading data file from Fritz
+
+### 2024-04-30 
+
+-Fixed SNID error when spectra contained NaNs
+-Now pulls TNS name from source page instead of alerts, reducing errors
+
+### 2024-03-14
+
+-Added Deveney+LMI to possible instruments
+
+### 2024-02-12
+
+-After uploading to TNS, re-query TNS name in Fritz to match
+
+### 2024-01-09
+
+-Fixed error preventing SPRAT spectra from being read
+-Minor improvements
+
 ### 2022-06-15
 
 - Minor fixes to author lists for TNS reports.

@@ -72,7 +72,7 @@ sources, tns_names, savedates, classifys, class_dates, reds, users, unclassifys,
  
 option = ''
 while option != 0: # Select options
-    print('1: Classify unclassified sources\n2: Check and upload light curve data\n3: Associate hosts with saved sources\n4: Submit Fritz classifications to TNS')
+    print('1: Classify unclassified sources\n2: Check and upload light curve data\n3: Associate hosts with saved sources\n4: Post TNS upload links\n5:Submit Fritz classifications to TNS')
     option = input('Enter in what you want to do, 0 to exit, or "all" to do all: ')
 
     if option!= 'all':
@@ -129,9 +129,22 @@ while option != 0: # Select options
         for i in np.arange(0,len(saved_sources)):
             print(bcolors.OKCYAN + str(i+1) + '/' + str(len(saved_sources)) + bcolors.ENDC + ': ' + bcolors.OKBLUE + saved_sources[i] + bcolors.ENDC)
             post_host(saved_sources[i])
-            comment_sublink(saved_sources[i])
 
     if option == 4 or option == 'all':
+
+        print(bcolors.OKGREEN + 'Posting TNS upload links...' + bcolors.ENDC)
+        
+        try:
+            for i in np.arange(0,len(saved_sources)):
+                print(bcolors.OKCYAN + str(i+1) + '/' + str(len(saved_sources)) + bcolors.ENDC + ': ' + bcolors.OKBLUE + saved_sources[i] + bcolors.ENDC)
+                comment_sublink(saved_sources[i])
+        except NameError:
+            saved_sources = np.append(sources, unclassifys)
+            for i in np.arange(0,len(saved_sources)):
+                print(bcolors.OKCYAN + str(i+1) + '/' + str(len(saved_sources)) + bcolors.ENDC + ': ' + bcolors.OKBLUE + saved_sources[i] + bcolors.ENDC)
+                comment_sublink(saved_sources[i])
+
+    if option == 5 or option == 'all':
         print(bcolors.OKGREEN + 'Beginning TNS submissions...' + bcolors.ENDC)
 
         print('There are ' + str(len(sources)) + ' objects saved or classified later than ' + str(startd) + ' with classifications.')

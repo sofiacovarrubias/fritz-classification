@@ -74,13 +74,15 @@ Users can choose to fit light curves to transients' photometry for unclassified 
 
 The rest will automatically be uploaded or, if there is already a light curve comment, updated if new photometry has changed the fit.
 
-See also [here](http://gayatri.caltech.edu:88/) for individual LC fitting.
-
 ### 3. Host Association
 
-You can also use ztfiaenv (developed by Mat Smith) to associate transients with potential hosts. This option will run through the objects and use the fitting code to find the most likely fit. In the occasion where this does not work, an error message will appear and will skip the object. This algorithm has relatively high accuracy, but has been known to fail with low-redshift (closer) and/or larger hosts. If this is the case, you can correct it with [individual fitting](http://gayatri.caltech.edu:88/).
+You can also use ztfiaenv (developed by Mat Smith) to associate transients with potential hosts. This option will run through the objects and use the fitting code to find the most likely fit. In the occasion where this does not work, an error message will appear and will skip the object. This algorithm has relatively high accuracy, but has been known to fail with low-redshift (closer) and/or larger hosts.
 
-### 4. TNS Submission
+### 4. TNS Upload Links
+
+This will post a comment on the Fritz source page with a link to upload to TNS. Anyone with access to the link can choose a spectrum(if more than one) to send to TNS along with the most recent classification.  Currently these comment links are only posted to RCF, RCFDeep, and RCFDeep Partnership groups. 
+
+### 5. TNS Submission
 
 The script can also submit to TNS any classified transients that have not been previously submitted by ZTF.
 
@@ -96,6 +98,10 @@ After completing all in the list, the script will indicate that the submission p
 
 ## Changelog
 
+### 2024-08-09
+
+-Separated TNS upload link comments from host comments
+
 ### 2024-06-28
 
 -Made comment links clickable
@@ -110,6 +116,7 @@ After completing all in the list, the script will indicate that the submission p
 
 -Fixed SNID error when spectra contained NaNs
 -Now pulls TNS name from source page instead of alerts, reducing errors
+-Removed function that adds redshift, as it was previosuly broken
 
 ### 2024-03-14
 

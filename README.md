@@ -80,7 +80,7 @@ You can also use ztfiaenv (developed by Mat Smith) to associate transients with 
 
 ### 4. TNS Upload Links
 
-This will post a comment on the Fritz source page with a link to upload to TNS. Anyone with access to the link can choose a spectrum(if more than one) to send to TNS along with the most recent classification.  Currently these comment links are only posted to RCF, RCFDeep, and RCFDeep Partnership groups. 
+This will post a comment on the Fritz source page with a link to upload to TNS. Anyone with access to the link can choose a spectrum(if more than one) to send to TNS along with the most recent classification.  Currently these comment links are only posted to RCF, RCFDeep, and RCFDeep Partnership groups. If using a different group, either change to public by using RCF_only=False, or change the group numbers. 
 
 ### 5. TNS Submission
 

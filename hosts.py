@@ -326,13 +326,13 @@ def post_host(source):
     if hostname == None:
         return
 
-    host_link =  '[http://gayatri.caltech.edu:88/query/host/'+source+'](http://gayatri.caltech.edu:88/query/host/'+source+')'
+    host_link =  '[http://gayatri.caltech.edu:88/query/host/'+source+'](http://gayatri.caltech.edu:88/query/host/'+source+')' # removed because link no longer works
 
     if redshift != None:
-        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+', z = '+str(redshift)+', type = '+hosttype+'. host page: '+host_link,
+        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+', z = '+str(redshift)+', type = '+hosttype+'. ', #'host page: '+host_link,
              'test_host.png', source+'_host.png')
     else:
-        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+', type = '+hosttype+'. host page: '+host_link, 
+        resp = post_comment(source, 'potential host: '+hostname+', ra = '+str(hostra)+', dec = '+str(hostdec)+', type = '+hosttype+'. ', #'host page: '+host_link, 
             'test_host.png', source+'_host.png')
 
     if resp['status'] == 'success':

@@ -274,6 +274,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
             spectrum_info = write_ascii_file(ztfname, auto = True) #returns "spectrum_name"
             spectrum_name = spectrum_info[0]
+            if spectrum_name == None:
+                continue
             #print(spectrum_name)
 
             if spectrum_name != 'No Spectra Found' and spectrum_name != 'Resuming...':
@@ -2081,6 +2083,7 @@ def write_ascii_file(ztfname, path=os.getcwd(), auto=False):
         spectrum_name = 'TNS_spectrum'
 
     else:
+        print(bcolors.WARNING + inst + " not in list of instruments, please add to code. Continuing..." + bcolors.ENDC)
         spectrum_name = None
 
     return spectrum_name, specid

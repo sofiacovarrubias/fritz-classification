@@ -45,8 +45,8 @@ YOUR_BOT_NAME="ZTF_Bot1"
 # TNS URLs for real uploads
 TNS_BASE_URL = "https://www.wis-tns.org/api/"
 upload_url = "https://www.wis-tns.org/api/file-upload"
-report_url = "https://www.wis-tns.org/api/bulk-report"
-reply_url = "https://www.wis-tns.org/api/bulk-report-reply"
+report_url = "https://www.wis-tns.org/api/set/bulk-report"
+reply_url = "https://www.wis-tns.org/api/get/bulk-report-reply"
 
 # SANDBOX URLs for TNS upload trials
 SAND_TNS_BASE_URL = "https://sandbox-tns.org/api/"

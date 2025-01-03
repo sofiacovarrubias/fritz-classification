@@ -44,7 +44,7 @@ YOUR_BOT_NAME="ZTF_Bot1"
 
 # TNS URLs for real uploads
 TNS_BASE_URL = "https://www.wis-tns.org/api/"
-upload_url = "https://www.wis-tns.org/api/file-upload"
+upload_url = "https://www.wis-tns.org/api/set/file-upload"
 report_url = "https://www.wis-tns.org/api/set/bulk-report"
 reply_url = "https://www.wis-tns.org/api/get/bulk-report-reply"
 
@@ -262,7 +262,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
             if prior != None:
                 if type == fritz_to_TNS_class(classify):
-                    print(ztfname + ' already uploaded to TNS with same classification.')
+                    print(ztfname + ' has the same classification on Fritz.')
                     continue
                 else:
                     if classify == 'duplicate':
@@ -952,25 +952,28 @@ def check_TNS_class(ztfname):
         Returns : Group that reported classification
     '''
 
-    tns_name = get_short_IAUname(ztfname)
+    tns_name = get_short_IAUname(ztfname) # get TNS name from ZTF name
     data = {'api_key' : API_KEY}
     headers={'User-Agent':'tns_marker{"tns_id":'+str(YOUR_BOT_ID)+', "type":"bot", "name":"'+YOUR_BOT_NAME+'"}'}
+    # get info from object page because api/get/object does not show classifier's group/date
     response = requests.get('https://www.wis-tns.org/object/'+tns_name, headers=headers, data=data)
-
+    
+    #parse the HTML
     try:
         class_data = response.text.split('Classification Reports', 2)[1]
     except:
         return None, None
 
-    if 'no-data' in class_data.split('class="clear"')[0]:
+    if 'no-data' in class_data.split('class="clear"')[0]: # if no classifications
         return None, None
 
-    class_info = class_data.split('class="odd"')[1]
+    class_info = class_data.split('class="row-even public odd"')[1] # get table with classifications
 
     print(ztfname + ' classified as ' + class_info.split('"cell-type">')[1].split('<')[0] + ' by ' + class_info.split('"cell-user_name">')[1].split('<')[0] + ' at ' +
           class_info.split('"cell-time_received">')[1].split('<')[0] + '.')
 
-    return class_info.split('"cell-source_group_name">')[1].split('<')[0], class_info.split('"cell-type">')[1].split('<')[0]
+    return class_info.split('"cell-source_group_name">')[1].split('<')[0], class_info.split('"cell-type">')[1].split('<')[0] # classifier group, classification 
+
 
 def edit_comment(ztfname, comment_id, author_id, text, attach=None, attach_name=None):
 

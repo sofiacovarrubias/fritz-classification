@@ -1292,8 +1292,8 @@ def get_IAUname(ztfname):
         except json.decoder.JSONDecodeError:
             print(response_tns.text)
 
-    if len(json.loads(response_tns.text)['data']['reply']) != 0:
-        return json.loads(response_tns.text)['data']['reply'][0]['prefix'] + ' ' + json.loads(response_tns.text)['data']['reply'][0]['objname']
+    if len(json.loads(response_tns.text)['data']) != 0:
+        return json.loads(response_tns.text)['data'][0]['prefix'] + ' ' + json.loads(response_tns.text)['data'][0]['objname']
 
     return 'Not reported to TNS'
 

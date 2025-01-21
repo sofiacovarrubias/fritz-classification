@@ -957,6 +957,19 @@ def check_TNS_class(ztfname):
     headers={'User-Agent':'tns_marker{"tns_id":'+str(YOUR_BOT_ID)+', "type":"bot", "name":"'+YOUR_BOT_NAME+'"}'}
     # get info from object page because api/get/object does not show classifier's group/date
     response = requests.get('https://www.wis-tns.org/object/'+tns_name, headers=headers, data=data)
+
+    # for when TNS doesn't want to cooperate (happens intermittently)
+    if response.status_code == 401:
+        print(bcolors.WARNING + 'Error with TNS.' + bcolors.ENDC + ' Checking Fritz instead...')
+        response = api('GET',BASEURL+'api/sources/'+ztfname) # check Fritz for TNS classification status
+        try:
+            spectra_data = response['data']['tns_info']['spectra'] # 'spectra' field only populates when a classification spectrum has been uploaded to TNS
+            classif_group = spectra_data[0]['source_group_name']
+            print(ztfname + ' classified by ' + classif_group + '.')
+            print(bcolors.WARNING + 'Please check TNS for classification.' + bcolors.ENDC)
+            return classif_group, ""
+        except (KeyError, IndexError) as e:
+            pass
     
     #parse the HTML
     try:

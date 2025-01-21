@@ -59,7 +59,7 @@ if 'RCF_sources.ascii' not in test:
     since = input('Enter earliest date to download sources from (YYYY-MM-DD) or enter nothing to set it to 6 months ago: ')
     get_source_file('RCF_sources', since)
 else:
-    dl = input('Download new list of RCF sources? ([y]/n) ')
+    dl = input('Download new list of sources? ([y]/n) ')
 
     if dl == 'y':
         since = input('Enter earliest date to download sources from (YYYY-MM-DD) or enter nothing to set it to 6 months ago: ')

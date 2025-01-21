@@ -1596,22 +1596,28 @@ def get_total_number_of_sources(group_id):
     response = api('GET',url)
     return len(response['data']['sources'])
 
-def post_comment(ztfname, text, attach=None, attach_name=None, RCF_only=False):
+def post_comment(ztfname, text, attach=None, attach_name=None, private=False):
 
     ''' Info : Posts a comment on transient's Fritz page
         Input : ZTFname, text
         Returns : API response
     '''
 
-    if RCF_only == False:
+    if private == False:
         data = {
                 "text": text, 
                }
-    elif RCF_only == True:
-        data = {
-                "text": text,
-                "group_ids": [41, 280, 1621],  # RCF, RCFDeepSurvey, RCFDeepPartnership 
-               }
+    elif private == True:
+        if groupnum == '41':
+            data = {
+                    "text": text,
+                    "group_ids": [41, 280, 1621],  # RCF, RCFDeepSurvey, RCFDeepPartnership 
+                   }
+        else:
+            data = {
+                    "text": text,
+                    "group_ids": [groupnum],
+                   }
 
     if attach != None:
         with open(attach, "rb") as img_file:

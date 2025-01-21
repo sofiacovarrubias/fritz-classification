@@ -61,7 +61,7 @@ def comment_sublink(source):
             print(source + ' already has TNS link.')
             return
     tns_submission_link = 'http://gayatri.caltech.edu:88/query/tns/'+source
-    resp = post_comment(source, 'Submit classification to TNS: [' + tns_submission_link + '](' + tns_submission_link + ')', RCF_only=True)
+    resp = post_comment(source, 'Submit classification to TNS: [' + tns_submission_link + '](' + tns_submission_link + ')', private=True)
 
     if resp['status'] == 'success':
         print(bcolors.OKGREEN + source + ' TNS link upload successful.' + bcolors.ENDC)

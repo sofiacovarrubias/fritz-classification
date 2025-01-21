@@ -48,16 +48,16 @@ This is before the rest of the procedure because if you submit classifications t
 The script will prompt the user to download an ASCII file containing a list of sources saved since the inputted date:
 
 ```
-Download new list of RCF sources? ([y]/n)
+Download new list of sources? ([y]/n)
 ```
 
-Each source is saved with its TNS name, save date, classification (if available), classification date (if available), and redshift (if available). By default, the last 180 days of saved sources will be saved. This is necessary because some sources are saved much earlier and potentially classified recently. This process can take a while, so be patient. This data will be saved as `RCF_sources.ASCII`. If the code fails for whatever reason, you can run from the beginning but skip downloading the ASCII file by entering `n` to the prompt.
+Each source is saved with its TNS name, save date, classification (if available), classification date (if available), and redshift (if available). By default, the last 6 months of saved sources will be saved. This is necessary because some sources are saved much earlier and potentially classified recently. This process can take a while, so be patient. This data will be saved as `RCF_sources.ASCII`. If the code fails for whatever reason, you can run from the beginning but skip downloading the ASCII file by entering `n` to the prompt.
 
 ### 1. SNID Analysis on Unclassified Sources
 
 The script can select all unclassified sources that have been saved since the inputted date to run classification. The user can proceed to run SNID on unclassified transients, the process of which is the same as with the redshifts. Select the spectrum to use carefully using the following critera:
 
-* **The spectra themselves**: check the plots on Fritz. Generally, SEDM spectra which were taken most recently will have lower SNR, and "constep" spectra will generally also have lower SNR than "robot" spectra. If there are spectra from more powerful telescopes than SEDM (such as LRIS or NOT), use these.
+* **The spectra themselves**: check the plots on Fritz. Generally, SEDM spectra which were taken most recently will have lower SNR, and "constep" spectra will generally also have better SNR than "robot" spectra. If there are spectra from more powerful telescopes than SEDM (such as LRIS or NOT), use these.
 * **Comments**: Check comments for information on the source, sometimes there will be discussion on several potential classifications. If this is the case, SNID will likely not converge with a high `rlap` on any specific template.
 
 The spectral flux data will be downloaded from Fritz as an ASCII file and saved in `/data` (this directory will be generated if it does not exist). SNID will then run on the downloaded spectrum and pull this spectrum from the folder. If SNID converges, the script will open up ten plots, those with the highest `rlap` score. Check the rlap score of the first few, if they are greater than 10 and all converge on the same classification, then consider submitting a classification to Fritz. Check the plots to ensure that the spectrum closely matches that of the templates. The code will also run fitting on the light curve using `sncosmo`. This will pull the photometry data from Fritz and attempt to fit it to an SN Ia light curve. This is helpful if there is a <10 rlap score or noisy spectrum, but many templates that fit an SN Ia. The fit parameters converged on by `sncosmo` and many standard deviations they are from a sample of ~500 Fritz supernovae will also be displayed.
@@ -80,7 +80,7 @@ You can also use ztfiaenv (developed by Mat Smith) to associate transients with 
 
 ### 4. TNS Upload Links
 
-This will post a comment on the Fritz source page with a link to upload to TNS. Anyone with access to the link can choose a spectrum(if more than one) to send to TNS along with the most recent classification.  Currently these comment links are only posted to RCF, RCFDeep, and RCFDeep Partnership groups. 
+This will post a comment on the Fritz source page with a link to upload to TNS. Anyone with access to the link can choose a spectrum(if more than one) to send to TNS along with the most recent classification.  Currently these comment links are only posted to the group that was entered earlier. For RCF, these groups are RCF, RCFDeep, and RCFDeep Partnership. 
 
 ### 5. TNS Submission
 
@@ -97,6 +97,10 @@ Once you select the correct spectrum, the code will generate a TNS report, which
 After completing all in the list, the script will indicate that the submission process is complete.
 
 ## Changelog
+
+### 2025-01-03
+
+-Updated to work with TNS v2.0
 
 ### 2024-08-09
 

@@ -954,22 +954,16 @@ def check_TNS_class(ztfname):
 
     tns_name = get_short_IAUname(ztfname) # get TNS name from ZTF name
     data = {'api_key' : API_KEY}
-    headers={'User-Agent':'tns_marker{"tns_id":'+str(YOUR_BOT_ID)+', "type":"bot", "name":"'+YOUR_BOT_NAME+'"}'}
+    #headers={'User-Agent':'tns_marker{"tns_id":'+str(YOUR_BOT_ID)+', "type":"bot", "name":"'+YOUR_BOT_NAME+'"}'}
     # get info from object page because api/get/object does not show classifier's group/date
-    response = requests.get('https://www.wis-tns.org/object/'+tns_name, headers=headers, data=data)
+    #response = requests.get('https://www.wis-tns.org/object/'+tns_name, headers=headers, data=data)
 
-    # for when TNS doesn't want to cooperate (happens intermittently)
-    if response.status_code == 401:
-        print(bcolors.WARNING + 'Error with TNS.' + bcolors.ENDC + ' Checking Fritz instead...')
-        response = api('GET',BASEURL+'api/sources/'+ztfname) # check Fritz for TNS classification status
-        try:
-            spectra_data = response['data']['tns_info']['spectra'] # 'spectra' field only populates when a classification spectrum has been uploaded to TNS
-            classif_group = spectra_data[0]['source_group_name']
-            print(ztfname + ' classified by ' + classif_group + '.')
-            print(bcolors.WARNING + 'Please check TNS for classification.' + bcolors.ENDC)
-            return classif_group, ""
-        except (KeyError, IndexError) as e:
-            pass
+    # fix for TNS 2.0 update that throws a 401 error
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+                   'Accept-Language': 'en-US,en;q=0.9',
+                   'Accept-Encoding': 'gzip, deflate, br',
+                   'Connection': 'keep-alive'}
+    response = requests.get('https://www.wis-tns.org/object/'+tns_name, headers=headers)
     
     #parse the HTML
     try:
@@ -1608,16 +1602,16 @@ def post_comment(ztfname, text, attach=None, attach_name=None, private=False):
                 "text": text, 
                }
     elif private == True:
-        if groupnum == '41':
-            data = {
-                    "text": text,
-                    "group_ids": [41, 280, 1621],  # RCF, RCFDeepSurvey, RCFDeepPartnership 
-                   }
-        else:
-            data = {
-                    "text": text,
-                    "group_ids": [groupnum],
-                   }
+        #if groupnum == '41':
+        data = {
+                "text": text,
+                "group_ids": [41, 280, 1621],  # RCF, RCFDeepSurvey, RCFDeepPartnership 
+               }
+        #else:
+        #    data = {
+        #            "text": text,
+        #            "group_ids": [groupnum],
+        #           }
 
     if attach != None:
         with open(attach, "rb") as img_file:
@@ -1706,6 +1700,7 @@ def sourceclassification(outfile, dat=None):
     f = open (listdir+'/'+outfile+'.ascii','w')
     f.write('Source Name'+'\t'+'TNS Name'+'\t'+'Saved Date'+'\t'+'Classification'+'\t'+'Classification Date'+'\t'+'redshift'+'\t'+'user'+'\t'+'\n')
 
+    global groupnum
     groupnum = input('Enter in Group ID: ')
 
     num_tot = get_number(groupnum, dat)
@@ -2066,8 +2061,8 @@ def write_ascii_file(ztfname, path=os.getcwd(), auto=False):
         #print (s,'\n')
         spectrum_name = s
 
-
-    elif inst == 'LRIS' or inst == 'NIRES' or inst == 'GMOS_GS' or inst == 'FLOYDS' or inst == 'Deveny+LMI':
+    # everything else
+    elif inst == 'LRIS' or inst == 'NIRES' or inst == 'GMOS_GS' or inst == 'FLOYDS' or inst == 'Deveny+LMI' or inst == 'GHTS':
 
         wav = (a['data']['wavelengths'])
         flux = (a['data']['fluxes'])

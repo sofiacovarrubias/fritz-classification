@@ -852,7 +852,70 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'Deveny+LMI':
 
-                        auths = np.array(['E. Hammerstein', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        auths = np.array(['E. Hammerstein (UMD)', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+
+                        if name != 'S. ZTF':
+                            flag_1 = 0
+                            for au, auth in enumerate(auths):
+                                if name in auth:
+                                    auths = np.append(name, np.delete(auths, au))
+                                    flag_1 = 1
+                                    break
+
+                            if flag_1 == 0:
+                                auths = np.append(name, auths)
+
+                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        source_group = 48 ### Require source group id from drop down list, 0 is for None
+                        spectypes = np.array(['object','host','sky','arcs','synthetic'])
+
+                        #header = (a['data']['altdata'])
+
+                        #proprietary_period = int(input("Proprietary period in years:", x)
+                        proprietary_period = '0'
+                        proprietary_units = "years"
+                        spec_comments =''
+                        classification_comments = ''
+                        spectype='object'
+                        spectype_id = ['object', 'host', 'sky', 'arcs', 'synthetic'].index(spectype) + 1
+
+                        OBSDATE = a['data']['observed_at'].replace('T', ' ')
+
+                        classificationReport = TNSClassificationReport()
+                        classificationReport.name = get_short_IAUname(ztfname)
+                        classificationReport.fitsName = ''
+                        classificationReport.asciiName = spectrum_name
+                        classificationReport.classifierName = classifiers
+                        classificationReport.classificationID = get_TNS_classification_ID(classify)
+                        classificationReport.redshift = get_redshift(ztfname)
+                        classificationReport.classificationComments = classification_comments
+                        classificationReport.obsDate = OBSDATE
+                        classificationReport.instrumentID = get_TNS_instrument_ID(inst)
+                        #classificationReport.expTime = '300'
+
+                        observers = []
+
+                        for o in a['data']['observers']:
+                            observers.append(str(o['first_name'])+' '+str(o['last_name']))
+
+                        classificationReport.observers = ', '.join(map(str, observers))
+
+                        reducers = []
+
+                        for r in a['data']['reducers']:
+                            reducers.append(str(r['first_name'])+' '+str(r['last_name']))
+
+                        classificationReport.reducers = ', '.join(map(str, reducers))
+
+                        classificationReport.specTypeID = spectype_id
+                        classificationReport.spectrumComments = spec_comments
+                        classificationReport.groupID = source_group
+                        classificationReport.spec_proprietary_period_value = proprietary_period
+                        classificationReport.spec_proprietary_period_units = proprietary_units
+
+                    elif inst == 'GHTS':
+
+                        auths = np.array(['J. Carney (UNC)', 'I. Andreoni (UNC)','S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -964,7 +1027,7 @@ def check_TNS_class(ztfname):
                    'Accept-Encoding': 'gzip, deflate, br',
                    'Connection': 'keep-alive'}
     response = requests.get('https://www.wis-tns.org/object/'+tns_name, headers=headers)
-    
+
     #parse the HTML
     try:
         class_data = response.text.split('Classification Reports', 2)[1]
@@ -1576,7 +1639,7 @@ def get_TNS_instrument_ID(inst):
         Returns : TNS instrument ID
     '''
 
-    inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10, 'Deveny+LMI':143}
+    inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10, 'Deveny+LMI':143, 'GHTS':127}
 
     return inst_ids[inst]
 

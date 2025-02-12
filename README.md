@@ -98,6 +98,16 @@ After completing all in the list, the script will indicate that the submission p
 
 ## Changelog
 
+### 2025-02-11
+
+-Added NGPS to code
+-Added CATS150 compatability in TNS reports and private commenting
+-Added notification when a source is unclassified on Fritz, but has been classified on TNS
+
+### 2024-02-04
+
+-Added SOAR to list of instruments
+
 ### 2025-01-03
 
 -Updated to work with TNS v2.0

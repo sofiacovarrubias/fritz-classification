@@ -301,6 +301,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     if inst == 'SEDM':
 
                         auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -357,6 +359,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'SPRAT':
 
                         auths = np.array(['D. Perley (LJMU)', 'S. Covarrubias', 'M. Chu', 'K. R. Hinds', 'C. Fremling']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -408,6 +412,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'ALFOSC':
 
                         auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -469,9 +475,11 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                         classificationReport.spec_proprietary_period_value = proprietary_period
                         classificationReport.spec_proprietary_period_units = proprietary_units
 
-                    elif inst == 'DBSP' or inst == 'KAST':
+                    elif inst == 'DBSP' or inst == 'KAST' or inst == 'NGPS':
 
                         auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -533,6 +541,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'LRIS':
 
                         auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -596,6 +606,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'NIRES':
 
                         auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -659,6 +671,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'GMOS_GS':
 
                         auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -722,6 +736,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'FLOYDS':
 
                         auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
                         
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -786,6 +802,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'DIS':
 
                         auths = np.array(['M. Graham (UW)', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -853,6 +871,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'Deveny+LMI':
 
                         auths = np.array(['E. Hammerstein (UMD)', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -916,6 +936,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                     elif inst == 'GHTS':
 
                         auths = np.array(['J. Carney (UNC)', 'I. Andreoni (UNC)','S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
+                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
 
                         if name != 'S. ZTF':
                             flag_1 = 0
@@ -1639,7 +1661,7 @@ def get_TNS_instrument_ID(inst):
         Returns : TNS instrument ID
     '''
 
-    inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10, 'Deveny+LMI':143, 'GHTS':127}
+    inst_ids = {'DBSP':1, 'ALFOSC': 41, 'LRIS': 3, 'DIS': 70, 'SEDM': 149, 'SPRAT': 156, 'GMOS': 6, 'Lick-3m': 10, 'LFC': 2, 'TSPEC': 109, 'NIRES': 252, 'GMOS_GS': 9, 'FLOYDS': 125, 'KAST': 10, 'Deveny+LMI':143, 'GHTS':127, 'NGPS':285}
 
     return inst_ids[inst]
 
@@ -1665,16 +1687,16 @@ def post_comment(ztfname, text, attach=None, attach_name=None, private=False):
                 "text": text, 
                }
     elif private == True:
-        #if groupnum == '41':
-        data = {
-                "text": text,
-                "group_ids": [41, 280, 1621],  # RCF, RCFDeepSurvey, RCFDeepPartnership 
-               }
-        #else:
-        #    data = {
-        #            "text": text,
-        #            "group_ids": [groupnum],
-        #           }
+        if groupnum == '41':
+            data = {
+                    "text": text,
+                    "group_ids": [41, 280, 1621],  # RCF, RCFDeepSurvey, RCFDeepPartnership 
+                   }
+        else:
+            data = {
+                    "text": text,
+                    "group_ids": [groupnum],
+                   }
 
     if attach != None:
         with open(attach, "rb") as img_file:
@@ -2056,7 +2078,7 @@ def write_ascii_file(ztfname, path=os.getcwd(), auto=False):
         spectrum_name = s
 
 
-    elif inst == 'DBSP':
+    elif inst == 'DBSP' or inst == 'NGPS':
 
         wav = (a['data']['wavelengths'])
         flux = (a['data']['fluxes'])

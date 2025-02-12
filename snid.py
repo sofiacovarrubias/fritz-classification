@@ -346,6 +346,12 @@ def run_class(unclassifys, unclassified_reds):
 
     for s in np.arange(0,len(unclassifys)):
         print(bcolors.OKCYAN + str(s+1) + '/' + str(len(unclassifys)) + bcolors.ENDC + ': ' + bcolors.OKBLUE + unclassifys[s] + bcolors.ENDC)
+
+        # check if classified on TNS
+        print(bcolors.WARNING, end='')
+        p1,p2 = check_TNS_class(unclassifys[s])
+        print(bcolors.ENDC, end='')
+
         t, f, r, re = snid_analyze(unclassifys[s], unclassified_reds[s])
 
         if t != None:

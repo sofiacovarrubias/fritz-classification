@@ -64,6 +64,9 @@ else:
     if dl == 'y':
         since = input('Enter earliest date to download sources from (YYYY-MM-DD) or enter nothing to set it to 6 months ago: ')
         get_source_file('RCF_sources', since)
+        from func import groupnum
+    else:
+        groupnum = input('Enter in Group ID: ')
 
 f = ascii.read("RCF_sources.ascii", delimiter='\t') #ascii file containing the names of sources and their saved dates
 

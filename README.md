@@ -98,52 +98,55 @@ After completing all in the list, the script will indicate that the submission p
 
 ## Changelog
 
+<<<<<<< HEAD
 ### 2025-02-11
 
--Added NGPS to code
--Added CATS150 compatability in TNS reports and private commenting
--Added notification when a source is unclassified on Fritz, but has been classified on TNS
+- Added NGPS to code
+- Added CATS150 compatability in TNS reports and private commenting
+- Added notification when a source is unclassified on Fritz, but has been classified on TNS
 
 ### 2024-02-04
 
--Added SOAR to list of instruments
+- Added SOAR to list of instruments
 
+=======
+>>>>>>> f20619bff354f962dc74e544bccd58488185e9fe
 ### 2025-01-03
 
--Updated to work with TNS v2.0
+- Updated to work with TNS v2.0
 
 ### 2024-08-09
 
--Separated TNS upload link comments from host comments
+- Separated TNS upload link comments from host comments
 
 ### 2024-06-28
 
--Made comment links clickable
--Upload to TNS links are now private to RCF groups
--Minor fixes
+- Made comment links clickable
+- Upload to TNS links are now private to RCF groups
+- Minor fixes
 
 ### 2024-05-10
 
--Signifcant speed improvement when downloading data file from Fritz
+- Signifcant speed improvement when downloading data file from Fritz
 
 ### 2024-04-30 
 
--Fixed SNID error when spectra contained NaNs
--Now pulls TNS name from source page instead of alerts, reducing errors
--Removed function that adds redshift, as it was previosuly broken
+- Fixed SNID error when spectra contained NaNs
+- Now pulls TNS name from source page instead of alerts, reducing errors
+- Removed function that adds redshift, as it was previosuly broken
 
 ### 2024-03-14
 
--Added Deveney+LMI to possible instruments
+- Added Deveney+LMI to possible instruments
 
 ### 2024-02-12
 
--After uploading to TNS, re-query TNS name in Fritz to match
+- After uploading to TNS, re-query TNS name in Fritz to match
 
 ### 2024-01-09
 
--Fixed error preventing SPRAT spectra from being read
--Minor improvements
+- Fixed error preventing SPRAT spectra from being read
+- Minor improvements
 
 ### 2022-06-15
 

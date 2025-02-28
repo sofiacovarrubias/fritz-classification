@@ -212,6 +212,71 @@ def APO(specid):
 
     return OBSDATE.split(' \n')[0], EXPTIME.split(' \n')[0], OBSERVERS.split(' \n')[0], REDUCERS
 
+def get_group():
+    ''' Info : Have user input the group they are scanning for 
+        Returns : Group to check classifications for
+    '''
+    global groupnum
+    groupnum = input('Enter in Group ID: ')
+
+    return groupnum
+
+def get_auths(name, group, inst):
+    ''' Info : Gets an author list for uploading a source to TNS based on telescope used, and which group the source belongs to.
+        Input : Who classified the object on Fritz, group number, telescope used
+        Returns : Str with the proper author list
+    '''
+
+    if group == '1780': # if CATS150 classification
+        auths = np.array(['K. Das', 'S. Covarrubias', 'M. Kasliwal (Caltech)'])
+        auth_end = ' on behalf of the ZTF CATS150 collaboration' ### Change accordingly
+        
+    else: # assume RCF author list
+        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
+        auth_end = ' on behalf of the Zwicky Transient Facility (ZTF)'
+    
+    no_PI = ['SEDM', 'ALFOSC', 'DBSP', 'KAST', 'LRIS', 'NIRES', 'GMOS_GS', 'FLOYDS']
+    
+    if inst == 'SPRAT':
+        auths = np.insert(auths, 0, 'D. Perley (LJMU)')
+        auths = np.insert(auths, -1, 'K. R. Hinds')
+        
+    elif inst == 'NGPS':
+        if group == '1780':
+            auths = np.insert(auths, -1, 'C. Fremling (Caltech)')
+        else:
+            pass
+    
+    elif inst == 'DIS':
+        auths = np.insert(auths, 0, 'M. Graham (UW)')
+        
+    elif inst == 'Deveny+LMI':
+        auths = np.insert(auths, 0, 'E. Hammerstein (UMD)')
+        
+    elif inst == 'GHTS':
+        auths = np.concatenate((np.array(['J. Carney (UNC)', 'I. Andreoni (UNC)']), auths))
+    
+    elif inst in no_PI:
+        pass
+        
+    else:
+        print(bcolors.WARNING + "No author list defined, please add to code." + bcolors.ENDC)
+        
+    if name != 'S. ZTF':
+        flag_1 = 0
+        for au, auth in enumerate(auths):
+            if name in auth:
+                auths = np.append(name, np.delete(auths, au))
+                flag_1 = 1
+                break
+
+    if flag_1 == 0:
+        auths = np.append(name, auths)
+        
+    classifiers = ', '.join(map(str, auths)) + auth_end
+    
+    return classifiers
+
 def class_submission(sources, tns_names, classifys, class_dates, users):
 
     ''' Info : Takes source list and submits those with classifications that have not been submitted prior by ZTF
@@ -300,22 +365,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     if inst == 'SEDM':
 
-                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -358,22 +409,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'SPRAT':
 
-                        auths = np.array(['D. Perley (LJMU)', 'S. Covarrubias', 'M. Chu', 'K. R. Hinds', 'C. Fremling']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -411,22 +448,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'ALFOSC':
 
-                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -477,22 +500,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'DBSP' or inst == 'KAST' or inst == 'NGPS':
 
-                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -540,22 +549,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'LRIS':
 
-                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -605,22 +600,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'NIRES':
 
-                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -669,23 +650,9 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                         classificationReport.spec_proprietary_period_units = proprietary_units
 
                     elif inst == 'GMOS_GS':
-
-                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                    
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -735,22 +702,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'FLOYDS':
 
-                        auths = np.array(['S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
+                        classifiers = get_auths(name, groupnum, inst)
                         
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -801,22 +754,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'DIS':
 
-                        auths = np.array(['M. Graham (UW)', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
                         #proprietary_period = int(input("Proprietary period in years:", x)
@@ -870,22 +809,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'Deveny+LMI':
 
-                        auths = np.array(['E. Hammerstein (UMD)', 'S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 
@@ -935,22 +860,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                     elif inst == 'GHTS':
 
-                        auths = np.array(['J. Carney (UNC)', 'I. Andreoni (UNC)','S. Covarrubias', 'M. Chu', 'C. Fremling (Caltech)']) ### Change accordingly
-                        if groupnum == '1780': # CATS150: add Kaustav & Mansi 
-                            auths = np.append(auths, ['K. Das', 'M. Kasliwal (Caltech)'])
-
-                        if name != 'S. ZTF':
-                            flag_1 = 0
-                            for au, auth in enumerate(auths):
-                                if name in auth:
-                                    auths = np.append(name, np.delete(auths, au))
-                                    flag_1 = 1
-                                    break
-
-                            if flag_1 == 0:
-                                auths = np.append(name, auths)
-
-                        classifiers = ', '.join(map(str, auths)) + ' on behalf of the Zwicky Transient Facility (ZTF)'
+                        classifiers = get_auths(name, groupnum, inst)
+                        
                         source_group = 48 ### Require source group id from drop down list, 0 is for None
                         spectypes = np.array(['object','host','sky','arcs','synthetic'])
 

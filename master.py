@@ -66,7 +66,7 @@ else:
         get_source_file('RCF_sources', since)
         from func import groupnum
     else:
-        groupnum = input('Enter in Group ID: ')
+        groupnum = get_group()
 
 f = ascii.read("RCF_sources.ascii", delimiter='\t') #ascii file containing the names of sources and their saved dates
 

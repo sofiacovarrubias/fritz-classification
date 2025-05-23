@@ -253,7 +253,7 @@ def get_auths(name, group, inst):
     elif inst == 'Deveny+LMI':
         auths = np.insert(auths, 0, 'E. Hammerstein (UMD)')
         
-    elif inst == 'GHTS':
+    elif inst == 'GHTS' or inst == 'Goodman':
         auths = np.concatenate((np.array(['J. Carney (UNC)', 'I. Andreoni (UNC)']), auths))
     
     elif inst in no_PI:
@@ -270,8 +270,8 @@ def get_auths(name, group, inst):
                 flag_1 = 1
                 break
 
-    if flag_1 == 0:
-        auths = np.append(name, auths)
+        if flag_1 == 0:
+            auths = np.append(name, auths)
         
     classifiers = ', '.join(map(str, auths)) + auth_end
     
@@ -476,7 +476,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                         classificationReport.instrumentID = get_TNS_instrument_ID(inst)
 
                         if 'EXPTIME' in header.keys():
-                            classificationReport.expTime = (header['EXPTIME'])
+                            classificationReport.expTime = '1200.0'
 
                         observers = []
 
@@ -582,6 +582,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                         for o in a['data']['observers']:
                             observers.append(str(o['first_name'])+' '+str(o['last_name']))
+                        if len(observers) == 0:
+                            observers.append('Wynn Jacobson-Galán')
 
                         classificationReport.observers = ', '.join(map(str, observers))
 
@@ -589,6 +591,8 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
 
                         for r in a['data']['reducers']:
                             reducers.append(str(r['first_name'])+' '+str(r['last_name']))
+                        if len(reducers) == 0:
+                            reducers.append('Wynn Jacobson-Galán')
 
                         classificationReport.reducers = ', '.join(map(str, reducers))
 
@@ -858,7 +862,7 @@ def class_submission(sources, tns_names, classifys, class_dates, users):
                         classificationReport.spec_proprietary_period_value = proprietary_period
                         classificationReport.spec_proprietary_period_units = proprietary_units
 
-                    elif inst == 'GHTS':
+                    elif inst == 'GHTS' or inst == 'Goodman':
 
                         classifiers = get_auths(name, groupnum, inst)
                         

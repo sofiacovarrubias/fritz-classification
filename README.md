@@ -98,7 +98,10 @@ After completing all in the list, the script will indicate that the submission p
 
 ## Changelog
 
-<<<<<<< HEAD
+### 2025-05-23
+
+- Minor fixes
+
 ### 2025-02-11
 
 - Added NGPS to code
@@ -109,8 +112,6 @@ After completing all in the list, the script will indicate that the submission p
 
 - Added SOAR to list of instruments
 
-=======
->>>>>>> f20619bff354f962dc74e544bccd58488185e9fe
 ### 2025-01-03
 
 - Updated to work with TNS v2.0
